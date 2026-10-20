@@ -1,0 +1,4 @@
+# @deepwhale-cn/dsh-industry-finance 的组合层
+- insert:
+    - id: industry-finance
+      name: '@deepwhale-cn/dsh-industry-finance'

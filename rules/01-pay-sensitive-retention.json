@@ -1,0 +1,16 @@
+{
+  "id": "FIN-PAY-SENSITIVE-RETENTION",
+  "title": "支付敏感信息（CVV/CVN/磁道/卡密码）出现在字段、模型或配置里",
+  "severity": "high",
+  "source": "《个人金融信息保护技术规范》（JR/T 0171—2020）6.1.3 a)；《非银行支付机构监督管理条例》（国令第768号）第二十六条 —— 不应留存非本机构卡磁道、有效期、CVN/CVN2、卡密码等 C3 类别支付敏感信息",
+  "advice": "先确认这个字段是不是真的在存值、有没有必要存。支付网关返回的卡磁道、CVN/CVN2、卡密码属于不得留存的支付敏感信息，授权完成后应立即丢弃，最多只保留服务端下发的 token。如果只是请求参数透传、并不落库，请在字段命名或注释里写明「不落库」；如果确实要落库，改成令牌化或掩码，并补一份数据流说明。",
+  "check": {
+    "type": "file-pattern",
+    "pattern": "\\b(cvv2?|cvn2?|track_?[12]|track_?data|magnetic_?stripe|card_?pwd|pay_?pwd)\\b",
+    "flags": "gi",
+    "exts": [".java", ".kt", ".kts", ".sql", ".js", ".mjs", ".cjs", ".ts", ".py", ".go", ".cs", ".php", ".yml", ".yaml", ".properties", ".xml", ".json"],
+    "when": "card|银行卡|支付|cvv",
+    "exclude": ["[Ee]ncrypt|加密|PCI[-_ ]?DSS"],
+    "max": 30
+  }
+}

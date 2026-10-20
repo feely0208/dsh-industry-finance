@@ -1,0 +1,15 @@
+{
+  "id": "FIN-PAN-DISPLAY",
+  "title": "卡号等账户标识未脱敏就展示在页面模板或日志中",
+  "severity": "medium",
+  "source": "《个人金融信息保护技术规范》（JR/T 0171—2020）6.1.4.1 c) —— 除银行卡有效期外，C3 类别信息不应明文展示，只可展示后四位等掩码形式",
+  "advice": "展示前先脱敏：一般保留前 6 位 BIN 和后 4 位，中间打码，或直接复用项目里的 mask / desensitize 工具函数；模板里不要直接插值原始卡号。这里命中的是未经掩码的插值或打印，请确认同一行是否已有 substring / mask 处理——如果有而工具没识别，加一行注释说明即可。",
+  "check": {
+    "type": "file-pattern",
+    "pattern": "^(?!.*(?:mask|Mask|desensit|Desensitized|hideMiddle|substring|substr|后四位|\\*{4}))(?:.*(?:\\$\\{[^\\n}]*\\b(?:cardNo|card_no|cardNumber|pan|acctNo|accountNo)\\b[^\\n}]*\\}|\\{\\{[^\\n}]*\\b(?:cardNo|card_no|pan|acctNo)\\b[^\\n}]*\\}\\}|\\blog\\.(?:info|debug|warn|error)\\([^\\n]*(?:cardNo|card_no|acctNo|\\bpan\\b|卡号)))",
+    "flags": "gi",
+    "exts": [".html", ".htm", ".jsp", ".vue", ".jsx", ".tsx", ".js", ".mjs", ".cjs", ".ts", ".java", ".kt", ".py", ".php", ".cs"],
+    "when": "cardno|card_no|cardnumber|卡号|acctno|accountno|\\bpan\\b|\\{\\{",
+    "max": 20
+  }
+}

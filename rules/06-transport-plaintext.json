@@ -1,0 +1,33 @@
+{
+  "id": "FIN-TRANSPORT-PLAINTEXT",
+  "title": "支付/鉴权链路使用明文传输或关闭 TLS 校验",
+  "severity": "medium",
+  "source": "《个人金融信息保护技术规范》（JR/T 0171—2020）6.1.2 c)；《银行保险机构数据安全管理办法》（金规〔2024〕24号）第四十四条 —— C2/C3 信息通过公共网络传输应使用加密通道，或对数据本身加密",
+  "advice": "useSSL=false、sslMode=DISABLED、verifyServerCertificate=false 会同时失去传输加密和服务端身份校验；支付回调、鉴权接口不要用 http、ftp、telnet，也不要用已弃用的 TLSv1.0。请先确认这份配置有没有被更高优先级的 profile 覆盖、网关是否已在上游终止 TLS；确认后把校验打开，内网调用则改用数据层加密。",
+  "check": {
+    "type": "file-pattern",
+    "pattern": "^(?!.*(?:localhost|127\\.0\\.0\\.1|10\\.[0-9]|192\\.168\\.|172\\.(?:1[6-9]|2[0-9]|3[01])\\.|\\.internal|内网|test-server))(?:(?:.*\\buseSSL\\s*=\\s*false)|(?:.*\\bsslMode\\s*=\\s*DISABLED)|(?:.*\\bverifyServerCertificate\\s*=\\s*false)|(?:.*\\b(?:ftp|telnet)://)|(?:.*\\bTLSv1(?:\\.0)?(?![.0-9]))|(?:.*http://[^\\s\\n\"']*(?:pay|auth|login|token|bank|card|api)))",
+    "flags": "gi",
+    "exts": [
+      ".properties",
+      ".yml",
+      ".yaml",
+      ".xml",
+      ".json",
+      ".js",
+      ".mjs",
+      ".cjs",
+      ".ts",
+      ".java",
+      ".kt",
+      ".py",
+      ".go",
+      ".conf",
+      ".ini",
+      ".env",
+      ".toml"
+    ],
+    "when": "jdbc|datasource|redis|ssl|tls|https?://",
+    "max": 20
+  }
+}

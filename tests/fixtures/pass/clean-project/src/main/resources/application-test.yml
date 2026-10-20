@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: pay-gateway
+  datasource:
+    url: jdbc:mysql://mask-db-01:3306/pay_test
+    username: pay_app
+    password: ${DB_PASSWORD}
+  redis:
+    host: mask-redis-01
+    port: 6379
+  profiles:
+    active: test
+desensitize:
+  enabled: true
+  rules: idcard,phone,cardno

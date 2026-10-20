@@ -1,0 +1,139 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<title>深鲸守护 · 金融行业专项检查 · 检查报告</title>
+<style>
+  :root{--bg:#0b1018;--fg:#e6edf6;--muted:#8b9bb4;--line:#1e2a3a;--card:#121a26}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif;padding:32px}
+  .wrap{max-width:1180px;margin:0 auto}
+  h1{font-size:22px;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:13px;margin-bottom:20px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:20px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .card .k{color:var(--muted);font-size:12px;margin-bottom:6px}
+  .card .v{font-size:20px;font-weight:700}
+  .chip{display:inline-block;padding:3px 10px;border-radius:999px;margin:0 6px 6px 0;font-size:13px;
+        border:1px solid var(--c);color:var(--c)}
+  .chip b{font-size:15px}
+  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;font-size:13px}
+  th{color:var(--muted);font-weight:500;background:#0e1622}
+  tr:last-child td{border-bottom:0}
+  .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c);margin-right:6px}
+  .t{font-weight:600;margin-bottom:2px}
+  .src{color:var(--muted);font-size:12px}
+  code{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:#7dd3fc}
+  .ev{color:var(--muted);font-size:12px;margin-top:2px;word-break:break-all}
+  .adv{color:var(--muted);font-size:12px;max-width:260px}
+  .ok{background:#0d2b1a;border:1px solid #1d7a4a;color:#4ade80;padding:16px;border-radius:12px;margin-bottom:20px}
+  .warn{background:#2b1f0d;border:1px solid #a16207;color:#fbbf24;padding:12px 16px;border-radius:12px;margin-bottom:20px;font-size:13px}
+  footer{color:var(--muted);font-size:12px;margin-top:22px;padding-top:14px;border-top:1px solid var(--line)}
+  footer p{margin:3px 0}
+</style></head><body><div class="wrap">
+  <h1>深鲸守护 · 金融行业专项检查</h1>
+  <div class="sub">支付敏感信息、十年留存，金融这条线查得更严</div>
+
+  <div class="cards">
+    <div class="card"><div class="k">扫描文件</div><div class="v">10</div></div>
+    <div class="card"><div class="k">检查规则</div><div class="v">7<span style="font-size:13px;color:var(--muted)">/7</span></div></div>
+    <div class="card"><div class="k">命中</div><div class="v" style="color:#ea580c">14</div></div>
+    <div class="card"><div class="k">已跳过目录</div><div class="v">0</div></div>
+  </div>
+
+  
+  
+  
+
+  <div style="margin-bottom:16px"><span class="chip" style="--c:#ea580c">高 <b>10</b></span><span class="chip" style="--c:#ca8a04">中 <b>4</b></span></div>
+       <table><thead><tr><th>级别</th><th>问题</th><th>位置 / 证据</th><th>建议</th></tr></thead>
+       <tbody>
+      <tr class="sev-high">
+        <td><span class="dot" style="--c:#ea580c"></span>高</td>
+        <td><div class="t">支付敏感信息（CVV/CVN/磁道/卡密码）出现在字段、模型或配置里</div><div class="src">《个人金融信息保护技术规范》（JR/T 0171—2020）6.1.3 a)；《非银行支付机构监督管理条例》（国令第768号）第二十六条 —— 不应留存非本机构卡磁道、有效期、CVN/CVN2、卡密码等 C3 类别支付敏感信息</div></td>
+        <td><code>android/app/src/main/kotlin/com/example/pay/store/CardStore.kt:10</code><div class="ev">cvv</div></td>
+        <td class="adv">先确认这个字段是不是真的在存值、有没有必要存。支付网关返回的卡磁道、CVN/CVN2、卡密码属于不得留存的支付敏感信息，授权完成后应立即丢弃，最多只保留服务端下发的 token。如果只是请求参数透传、并不落库，请在字段命名或注释里写明「不落库」；如果确实要落库，改成令牌化或掩码，并补一份数据流说明。</td>
+      </tr>
+      <tr class="sev-high">
+        <td><span class="dot" style="--c:#ea580c"></span>高</td>
+        <td><div class="t">支付敏感信息（CVV/CVN/磁道/卡密码）出现在字段、模型或配置里</div><div class="src">《个人金融信息保护技术规范》（JR/T 0171—2020）6.1.3 a)；《非银行支付机构监督管理条例》（国令第768号）第二十六条 —— 不应留存非本机构卡磁道、有效期、CVN/CVN2、卡密码等 C3 类别支付敏感信息</div></td>
+        <td><code>android/app/src/main/kotlin/com/example/pay/store/CardStore.kt:12</code><div class="ev">cvv</div></td>
+        <td class="adv">先确认这个字段是不是真的在存值、有没有必要存。支付网关返回的卡磁道、CVN/CVN2、卡密码属于不得留存的支付敏感信息，授权完成后应立即丢弃，最多只保留服务端下发的 token。如果只是请求参数透传、并不落库，请在字段命名或注释里写明「不落库」；如果确实要落库，改成令牌化或掩码，并补一份数据流说明。</td>
+      </tr>
+      <tr class="sev-high">
+        <td><span class="dot" style="--c:#ea580c"></span>高</td>
+        <td><div class="t">支付敏感信息（CVV/CVN/磁道/卡密码）出现在字段、模型或配置里</div><div class="src">《个人金融信息保护技术规范》（JR/T 0171—2020）6.1.3 a)；《非银行支付机构监督管理条例》（国令第768号）第二十六条 —— 不应留存非本机构卡磁道、有效期、CVN/CVN2、卡密码等 C3 类别支付敏感信息</div></td>
+        <td><code>db/schema/payment.sql:7</code><div class="ev">cvv2</div></td>
+        <td class="adv">先确认这个字段是不是真的在存值、有没有必要存。支付网关返回的卡磁道、CVN/CVN2、卡密码属于不得留存的支付敏感信息，授权完成后应立即丢弃，最多只保留服务端下发的 token。如果只是请求参数透传、并不落库，请在字段命名或注释里写明「不落库」；如果确实要落库，改成令牌化或掩码，并补一份数据流说明。</td>
+      </tr>
+      <tr class="sev-high">
+        <td><span class="dot" style="--c:#ea580c"></span>高</td>
+        <td><div class="t">支付敏感信息（CVV/CVN/磁道/卡密码）出现在字段、模型或配置里</div><div class="src">《个人金融信息保护技术规范》（JR/T 0171—2020）6.1.3 a)；《非银行支付机构监督管理条例》（国令第768号）第二十六条 —— 不应留存非本机构卡磁道、有效期、CVN/CVN2、卡密码等 C3 类别支付敏感信息</div></td>
+        <td><code>db/schema/payment.sql:8</code><div class="ev">track2</div></td>
+        <td class="adv">先确认这个字段是不是真的在存值、有没有必要存。支付网关返回的卡磁道、CVN/CVN2、卡密码属于不得留存的支付敏感信息，授权完成后应立即丢弃，最多只保留服务端下发的 token。如果只是请求参数透传、并不落库，请在字段命名或注释里写明「不落库」；如果确实要落库，改成令牌化或掩码，并补一份数据流说明。</td>
+      </tr>
+      <tr class="sev-high">
+        <td><span class="dot" style="--c:#ea580c"></span>高</td>
+        <td><div class="t">支付敏感信息（CVV/CVN/磁道/卡密码）出现在字段、模型或配置里</div><div class="src">《个人金融信息保护技术规范》（JR/T 0171—2020）6.1.3 a)；《非银行支付机构监督管理条例》（国令第768号）第二十六条 —— 不应留存非本机构卡磁道、有效期、CVN/CVN2、卡密码等 C3 类别支付敏感信息</div></td>
+        <td><code>db/schema/payment.sql:9</code><div class="ev">card_pwd</div></td>
+        <td class="adv">先确认这个字段是不是真的在存值、有没有必要存。支付网关返回的卡磁道、CVN/CVN2、卡密码属于不得留存的支付敏感信息，授权完成后应立即丢弃，最多只保留服务端下发的 token。如果只是请求参数透传、并不落库，请在字段命名或注释里写明「不落库」；如果确实要落库，改成令牌化或掩码，并补一份数据流说明。</td>
+      </tr>
+      <tr class="sev-high">
+        <td><span class="dot" style="--c:#ea580c"></span>高</td>
+        <td><div class="t">鉴别信息（口令/PIN/短信验证码）明文落库、写日志或直接打印</div><div class="src">《银行保险机构数据安全管理办法》（金规〔2024〕24号）第四十五条；《个人金融信息保护技术规范》（JR/T 0171—2020）6.1.3 c) —— 个人身份鉴别信息属于 C3 类别，不得明文存储、传输和展示</div></td>
+        <td><code>db/schema/payment.sql:18</code><div class="ev">  password      VARCHAR</div></td>
+        <td class="adv">口令要用 bcrypt、Argon2、PBKDF2 这类加盐慢哈希存储，不要用可逆加密，更不要明文列；日志和标准输出只记「校验通过/失败」这类结论，不要带出值。这里命中的可能是 DDL 列类型，也可能是日志打印：DDL 看这一列是否明文存储，日志看是否把值带出去了。改完用 --root 再跑一遍确认。</td>
+      </tr>
+      <tr class="sev-high">
+        <td><span class="dot" style="--c:#ea580c"></span>高</td>
+        <td><div class="t">鉴别信息（口令/PIN/短信验证码）明文落库、写日志或直接打印</div><div class="src">《银行保险机构数据安全管理办法》（金规〔2024〕24号）第四十五条；《个人金融信息保护技术规范》（JR/T 0171—2020）6.1.3 c) —— 个人身份鉴别信息属于 C3 类别，不得明文存储、传输和展示</div></td>
+        <td><code>src/main/java/com/example/pay/auth/LoginService.java:10</code><div class="ev">        log.info(&quot;login user={} pwd={}&quot;, username, password</div></td>
+        <td class="adv">口令要用 bcrypt、Argon2、PBKDF2 这类加盐慢哈希存储，不要用可逆加密，更不要明文列；日志和标准输出只记「校验通过/失败」这类结论，不要带出值。这里命中的可能是 DDL 列类型，也可能是日志打印：DDL 看这一列是否明文存储，日志看是否把值带出去了。改完用 --root 再跑一遍确认。</td>
+      </tr>
+      <tr class="sev-high">
+        <td><span class="dot" style="--c:#ea580c"></span>高</td>
+        <td><div class="t">客户身份资料/交易记录留存期配置不足十年</div><div class="src">《中华人民共和国反洗钱法》（2024 修订）第三十四条 —— 客户身份资料在业务关系结束后、客户交易信息在交易结束后，至少保存十年</div></td>
+        <td><code>config/retention.yml:2</code><div class="ev">tradeRecord.retentionDays: 1825</div></td>
+        <td class="adv">留存期通常写在 retentionDays、TTL、分区清理和 DELETE ... INTERVAL 里。十年按 3650 天算，命中 1825（5 年）、365（1 年）这类值时要确认它是不是交易/客户主数据的留存。会话、缓存、日志、风控临时快照可以短留存，但请把这类短配置改成独立命名并加注释，避免被当成主数据策略；已归档冷存储的分区清理需要人工确认。</td>
+      </tr>
+      <tr class="sev-high">
+        <td><span class="dot" style="--c:#ea580c"></span>高</td>
+        <td><div class="t">客户端本地持久化存储卡号/CVV/口令等支付敏感信息</div><div class="src">《个人金融信息保护技术规范》（JR/T 0171—2020）6.1.3 d) —— 受理终端、个人终端及客户端应用软件均不应存储支付敏感信息及生物识别信息样本或模板</div></td>
+        <td><code>android/app/src/main/kotlin/com/example/pay/store/CardStore.kt:11</code><div class="ev">        sp.putString(&quot;card_no</div></td>
+        <td class="adv">客户端的 SharedPreferences、MMKV、UserDefaults 和 localStorage 都是明文或弱保护存储，卸载重装、root、越狱都能读。这里命中说明 key 是卡号、CVV、口令一类，应改成只存服务端下发的 token 或掩码后四位；确实要留凭证请用 Keychain/Keystore 并限制访问级别。生物识别只存「已开启」开关，不存特征样本或模板。</td>
+      </tr>
+      <tr class="sev-high">
+        <td><span class="dot" style="--c:#ea580c"></span>高</td>
+        <td><div class="t">客户端本地持久化存储卡号/CVV/口令等支付敏感信息</div><div class="src">《个人金融信息保护技术规范》（JR/T 0171—2020）6.1.3 d) —— 受理终端、个人终端及客户端应用软件均不应存储支付敏感信息及生物识别信息样本或模板</div></td>
+        <td><code>android/app/src/main/kotlin/com/example/pay/store/CardStore.kt:12</code><div class="ev">        sp.putString(&quot;cvv</div></td>
+        <td class="adv">客户端的 SharedPreferences、MMKV、UserDefaults 和 localStorage 都是明文或弱保护存储，卸载重装、root、越狱都能读。这里命中说明 key 是卡号、CVV、口令一类，应改成只存服务端下发的 token 或掩码后四位；确实要留凭证请用 Keychain/Keystore 并限制访问级别。生物识别只存「已开启」开关，不存特征样本或模板。</td>
+      </tr>
+      <tr class="sev-medium">
+        <td><span class="dot" style="--c:#ca8a04"></span>中</td>
+        <td><div class="t">卡号等账户标识未脱敏就展示在页面模板或日志中</div><div class="src">《个人金融信息保护技术规范》（JR/T 0171—2020）6.1.4.1 c) —— 除银行卡有效期外，C3 类别信息不应明文展示，只可展示后四位等掩码形式</div></td>
+        <td><code>src/main/resources/templates/order.html:9</code><div class="ev">    &lt;p&gt;卡号：&lt;span th:text=&quot;${cardNo}</div></td>
+        <td class="adv">展示前先脱敏：一般保留前 6 位 BIN 和后 4 位，中间打码，或直接复用项目里的 mask / desensitize 工具函数；模板里不要直接插值原始卡号。这里命中的是未经掩码的插值或打印，请确认同一行是否已有 substring / mask 处理——如果有而工具没识别，加一行注释说明即可。</td>
+      </tr>
+      <tr class="sev-medium">
+        <td><span class="dot" style="--c:#ca8a04"></span>中</td>
+        <td><div class="t">支付/鉴权链路使用明文传输或关闭 TLS 校验</div><div class="src">《个人金融信息保护技术规范》（JR/T 0171—2020）6.1.2 c)；《银行保险机构数据安全管理办法》（金规〔2024〕24号）第四十四条 —— C2/C3 信息通过公共网络传输应使用加密通道，或对数据本身加密</div></td>
+        <td><code>src/main/resources/application.properties:3</code><div class="ev">spring.datasource.url=jdbc:mysql://pay-gw.example.com:3306/pay?useSSL=false</div></td>
+        <td class="adv">useSSL=false、sslMode=DISABLED、verifyServerCertificate=false 会同时失去传输加密和服务端身份校验；支付回调、鉴权接口不要用 http、ftp、telnet，也不要用已弃用的 TLSv1.0。请先确认这份配置有没有被更高优先级的 profile 覆盖、网关是否已在上游终止 TLS；确认后把校验打开，内网调用则改用数据层加密。</td>
+      </tr>
+      <tr class="sev-medium">
+        <td><span class="dot" style="--c:#ca8a04"></span>中</td>
+        <td><div class="t">支付/鉴权链路使用明文传输或关闭 TLS 校验</div><div class="src">《个人金融信息保护技术规范》（JR/T 0171—2020）6.1.2 c)；《银行保险机构数据安全管理办法》（金规〔2024〕24号）第四十四条 —— C2/C3 信息通过公共网络传输应使用加密通道，或对数据本身加密</div></td>
+        <td><code>src/main/resources/application.properties:4</code><div class="ev">payment.callback.url=http://pay</div></td>
+        <td class="adv">useSSL=false、sslMode=DISABLED、verifyServerCertificate=false 会同时失去传输加密和服务端身份校验；支付回调、鉴权接口不要用 http、ftp、telnet，也不要用已弃用的 TLSv1.0。请先确认这份配置有没有被更高优先级的 profile 覆盖、网关是否已在上游终止 TLS；确认后把校验打开，内网调用则改用数据层加密。</td>
+      </tr>
+      <tr class="sev-medium">
+        <td><span class="dot" style="--c:#ca8a04"></span>中</td>
+        <td><div class="t">测试/开发环境配置直连生产库或未脱敏数据</div><div class="src">《银行保险机构数据安全管理办法》（金规〔2024〕24号）第四十八条 —— 测试环境应与生产系统隔离，敏感级及以上数据原则上未经脱敏不得进入测试环境</div></td>
+        <td><code>src/main/resources/application-test.yml:5</code><div class="ev">jdbc:mysql://prod</div></td>
+        <td class="adv">application-test/dev/uat/sit 里出现 prod、prd、生产 主机名，或 profiles.active=prod，都意味着测试流量可能落到生产库。请改成独立的脱敏副本库，并在同一份配置里显式打开脱敏开关（desensitize / 脱敏）——本规则识别到脱敏开关后不再报。如果确实是脱敏副本，请在配置注释里写明来源与同步方式，方便审计核对。</td>
+      </tr></tbody></table>
+
+  <footer>
+    <p>扫描范围：<code>内置演示样本 · 故意有问题的项目</code> · 10 个文件</p>
+    <p>规则库：— · 生成时间：2026-10-20 04:35:35</p>
+    <p></p>
+  </footer>
+</div></body></html>

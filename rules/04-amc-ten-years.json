@@ -1,0 +1,30 @@
+{
+  "id": "FIN-AMC-10Y",
+  "title": "客户身份资料/交易记录留存期配置不足十年",
+  "severity": "high",
+  "source": "《中华人民共和国反洗钱法》（2024 修订）第三十四条 —— 客户身份资料在业务关系结束后、客户交易信息在交易结束后，至少保存十年",
+  "advice": "留存期通常写在 retentionDays、TTL、分区清理和 DELETE ... INTERVAL 里。十年按 3650 天算，命中 1825（5 年）、365（1 年）这类值时要确认它是不是交易/客户主数据的留存。会话、缓存、日志、风控临时快照可以短留存，但请把这类短配置改成独立命名并加注释，避免被当成主数据策略；已归档冷存储的分区清理需要人工确认。",
+  "check": {
+    "type": "file-pattern",
+    "pattern": "^(?!.*(?:session|cache|cookie|log|temp|tmp|snapshot|风控|快照))(?:(?:.*\\b(?:retention|retain|keep|expire|expiry)[_A-Za-z]*(?:days?|ttl)\\w*\\s*[:=]\\s*['\"]?(?:[0-9]{1,3}|1[0-9]{3}|2[0-9]{3}|3[0-5][0-9]{2}|36[0-4][0-9])\\b)|(?:.*\\b(?:retention|retain|keep)[_A-Za-z]*years?\\w*\\s*[:=]\\s*['\"]?[0-9]\\b)|(?:.*INTERVAL\\s+(?:[0-9]{1,3}|1[0-9]{3}|2[0-9]{3}|3[0-5][0-9]{2}|36[0-4][0-9])\\s+DAYS?\\b)|(?:.*INTERVAL\\s+[0-9]\\s+YEARS?\\b)|(?:.*DROP\\s+PARTITION[^\\n]*?(?:retain|keep|保留)[^\\n]*?[0-9]\\s*(?:YEAR|年)))",
+    "flags": "gi",
+    "exts": [
+      ".yml",
+      ".yaml",
+      ".properties",
+      ".json",
+      ".sql",
+      ".java",
+      ".kt",
+      ".js",
+      ".mjs",
+      ".ts",
+      ".py",
+      ".go",
+      ".xml",
+      ".conf"
+    ],
+    "when": "retention|retain|trade|cust|acct|order|pay|交易|客户|账户|留存",
+    "max": 20
+  }
+}

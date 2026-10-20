@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>订单确认</title>
+</head>
+<body>
+  <div class="order-card">
+    <p>卡号：<span th:text="${cardNo}"></span></p>
+    <p>金额：<span th:text="${amount}"></span></p>
+    <p>商户：<span th:text="${merchantName}"></span></p>
+  </div>
+</body>
+</html>

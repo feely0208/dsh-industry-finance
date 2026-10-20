@@ -1,0 +1,31 @@
+{
+  "id": "FIN-TESTENV-PROD-DATA",
+  "title": "测试/开发环境配置直连生产库或未脱敏数据",
+  "severity": "medium",
+  "source": "《银行保险机构数据安全管理办法》（金规〔2024〕24号）第四十八条 —— 测试环境应与生产系统隔离，敏感级及以上数据原则上未经脱敏不得进入测试环境",
+  "advice": "application-test/dev/uat/sit 里出现 prod、prd、生产 主机名，或 profiles.active=prod，都意味着测试流量可能落到生产库。请改成独立的脱敏副本库，并在同一份配置里显式打开脱敏开关（desensitize / 脱敏）——本规则识别到脱敏开关后不再报。如果确实是脱敏副本，请在配置注释里写明来源与同步方式，方便审计核对。",
+  "check": {
+    "type": "file-pattern",
+    "pattern": "(?:jdbc:[a-z]+://[^\\s\\n/\"']*(?:prod|prd|生产))|(?:rediss?://[^\\s\\n/\"']*(?:prod|prd|生产))|(?:spring\\.profiles\\.active\\s*[:=]\\s*['\"]?prod)",
+    "flags": "gi",
+    "paths": [
+      "**/application-test.yml",
+      "**/application-test.yaml",
+      "**/application-test.properties",
+      "**/application-dev.yml",
+      "**/application-dev.yaml",
+      "**/application-dev.properties",
+      "**/application-uat.yml",
+      "**/application-uat.yaml",
+      "**/application-uat.properties",
+      "**/application-sit.yml",
+      "**/application-sit.yaml",
+      "**/application-sit.properties"
+    ],
+    "when": "jdbc|datasource|redis|profiles",
+    "exclude": [
+      "[Dd]esensitize|[Dd]esensitized|脱敏|[Aa]nonymi[sz]e|[Ll]ocalhost|127\\.0\\.0\\.1"
+    ],
+    "max": 10
+  }
+}

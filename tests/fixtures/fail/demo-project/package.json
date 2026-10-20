@@ -1,0 +1,10 @@
+{
+  "name": "pay-gateway-demo",
+  "version": "1.4.2",
+  "private": true,
+  "description": "示例支付网关（内含若干合规问题，仅用于演示检查效果）",
+  "dependencies": {
+    "spring-boot-starter-web": "3.2.5",
+    "mysql-connector-j": "8.3.0"
+  }
+}

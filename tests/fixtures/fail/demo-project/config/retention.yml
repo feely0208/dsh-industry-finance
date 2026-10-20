@@ -1,0 +1,5 @@
+# 数据留存策略（示例）
+tradeRecord.retentionDays: 1825
+tradeRecord.archiveAfterDays: 30
+
+loginLog.retentionDays: 180

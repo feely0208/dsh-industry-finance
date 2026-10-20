@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>订单确认</title>
+</head>
+<body>
+  <div class="order-card">
+    <p>卡号：${cardNo?substring(0,6)}******${cardNo?substring(cardNo?length-4)}</p>
+    <p>金额：${amount?string("0.00")}</p>
+    <p>商户：${merchantName}</p>
+  </div>
+</body>
+</html>

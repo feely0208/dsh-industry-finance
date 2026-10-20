@@ -1,0 +1,10 @@
+{
+  "name": "pay-gateway-clean",
+  "version": "2.0.0",
+  "private": true,
+  "description": "合规写法示例：卡号掩码、口令哈希、十年留存、TLS 全开、测试环境连脱敏副本",
+  "dependencies": {
+    "spring-boot-starter-web": "3.2.5",
+    "mysql-connector-j": "8.3.0"
+  }
+}

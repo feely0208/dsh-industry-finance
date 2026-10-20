@@ -1,0 +1,5 @@
+# 数据留存策略（合规：交易与客户主数据满十年）
+tradeRecord.retentionDays: 3650
+tradeRecord.archiveAfterDays: 3650
+
+session.retentionDays: 7
