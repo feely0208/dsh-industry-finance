@@ -1,5 +1,7 @@
 # @deepwhale-cn/dsh-industry-finance
 
+[![dshfind 收录](https://dshfind.com/api/badge/feely0208/dsh-industry-finance?lang=zh)](https://dshfind.com/zh/plugins/feely0208/dsh-industry-finance)
+
 [![Listed on dsh-plugin.org](https://dsh-plugin.org/badges/listed.svg)](https://dsh-plugin.org/plugins/feely0208/dsh-industry-finance)
 
 **金融行业专项检查**：装它之后，支付敏感信息、口令明文、卡号裸展示、留存不足十年、客户端乱存卡、明文传输、测试环境连生产 —— 这七类问题在代码里就能先筛一遍。
